@@ -9,6 +9,7 @@ import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.extendedtodo.ui.theme.ToDoListAppTheme
 import com.example.extendedtodo.components.*
 
@@ -55,5 +56,13 @@ fun TodoListContent(
         Spacer(modifier = Modifier.height(16.dp))
 
         TaskList(tasks)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DefaultPreview() {
+    ToDoListAppTheme {
+        TodoListScreen()
     }
 }
