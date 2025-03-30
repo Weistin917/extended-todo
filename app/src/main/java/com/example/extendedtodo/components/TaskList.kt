@@ -1,10 +1,13 @@
 package com.example.extendedtodo.components
 
-import android.widget.Button
-import android.widget.Space
 import androidx.compose.runtime.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Done
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.outlined.Close
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -84,7 +87,11 @@ fun TaskItem(
                     Button(
                         onClick = { setEditTask(task) }
                     ) {
-                        Text(text = "Edit")
+                        Icon(
+                            Icons.Filled.Edit,
+                            "Edit Task",
+                            modifier = Modifier.size(ButtonDefaults.IconSize)
+                        )
                     }
 
                     Spacer(modifier = Modifier.width(8.dp))
@@ -92,7 +99,11 @@ fun TaskItem(
                     Button(
                         onClick = { onDeleteTask(task) }
                     ) {
-                        Text(text = "Delete")
+                        Icon(
+                            Icons.Filled.Delete,
+                            "Delete Task",
+                            modifier = Modifier.size(ButtonDefaults.IconSize)
+                        )
                     }
                 }
             }
@@ -141,7 +152,11 @@ fun EditTaskItem(
                     Button(
                         onClick = { onCancelEdit() }
                     ) {
-                        Text(text = "Cancel")
+                        Icon(
+                            Icons.Outlined.Close,
+                            "Cancel edit",
+                            modifier = Modifier.size(ButtonDefaults.IconSize)
+                        )
                     }
 
                     Spacer(modifier = Modifier.width(8.dp))
@@ -152,7 +167,11 @@ fun EditTaskItem(
                             onCancelEdit()
                         }
                     ) {
-                        Text(text = "Save")
+                        Icon(
+                            Icons.Filled.Done,
+                            "Save edit",
+                            modifier = Modifier.size(ButtonDefaults.IconSize)
+                        )
                     }
                 }
             }
