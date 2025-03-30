@@ -57,6 +57,12 @@ fun TodoListScreen() {
         tasks = tasks,
         onAddTask = { title, imageUri ->
             tasks.add(Task(title, imageUri))
+        },
+        onEditTask = { task, title, imageUri ->
+            tasks[tasks.indexOf(task)] = Task(title, imageUri)
+        },
+        onDeleteTask = { task ->
+            tasks.remove(task)
         }
     )
 }
@@ -64,10 +70,13 @@ fun TodoListScreen() {
 @Composable
 fun TodoListContent(
     tasks: List<Task>,
-    onAddTask: (String, String?) -> Unit
+    onAddTask: (String, String?) -> Unit,
+    onEditTask: (Task, String, String?) -> Unit,
+    onDeleteTask: (Task) -> Unit
 ) {
     var newTaskTitle by remember { mutableStateOf("") }
     var selectedImageUri by remember { mutableStateOf<String?>(null) }
+    var editTaskTitle by remember { mutableStateOf("") }
     val imagePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri ->
@@ -87,6 +96,7 @@ fun TodoListContent(
         AddTask(
             newTaskTitle = newTaskTitle,
             onTitleChange = { input -> newTaskTitle = input },
+            selectedImageUri = selectedImageUri,
             onChooseImage = { image -> imagePickerLauncher.launch(image) },
             onAddTask = {
                 if (newTaskTitle.isNotEmpty()) {
@@ -99,7 +109,22 @@ fun TodoListContent(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        TaskList(tasks)
+        TaskList(
+            tasks = tasks,
+            newTitle = editTaskTitle,
+            onTitleChange = { input ->
+                editTaskTitle = input
+                            },
+            onChangeImage = { image -> imagePickerLauncher.launch(image) },
+            onEditTask = { task ->
+                if (editTaskTitle.isNotEmpty()) {
+                    onEditTask(task, editTaskTitle, selectedImageUri)
+                    editTaskTitle = ""
+                    selectedImageUri = null
+                }
+            },
+            onDeleteTask = { task -> onDeleteTask(task) }
+        )
     }
 }
 

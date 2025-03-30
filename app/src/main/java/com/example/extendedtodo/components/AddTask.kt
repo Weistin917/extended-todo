@@ -5,11 +5,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 
 @Composable
 fun AddTask(
     newTaskTitle: String,
     onTitleChange: (String) -> Unit,
+    selectedImageUri: String?,
     onChooseImage: (String) -> Unit,
     onAddTask: () -> Unit
 ) {
@@ -28,6 +30,13 @@ fun AddTask(
     ) {
         Button(onClick = { onChooseImage("image/*") }) {
             Text("Choose an image")
+        }
+        selectedImageUri?.let {
+            uri -> AsyncImage(
+                model = uri,
+                contentDescription = null,
+                modifier = Modifier.size(64.dp)
+            )
         }
         Button(onClick = {
             onAddTask()
