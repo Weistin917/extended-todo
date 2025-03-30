@@ -7,10 +7,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AddTask() {
+fun AddTask(
+    newTaskTitle: String,
+    onTitleChange: (String) -> Unit,
+    onChooseImage: (String) -> Unit,
+    onAddTask: () -> Unit
+) {
     OutlinedTextField(
-        value = "",
-        onValueChange = {},
+        value = newTaskTitle,
+        onValueChange = { onTitleChange(it) },
         label = { Text("Task Name") },
         modifier = Modifier.fillMaxWidth()
     )
@@ -21,10 +26,12 @@ fun AddTask() {
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Button(onClick = {}) {
+        Button(onClick = { onChooseImage("image/*") }) {
             Text("Choose an image")
         }
-        Button(onClick = {}) {
+        Button(onClick = {
+            onAddTask()
+        }) {
             Text("Add Task")
         }
     }
